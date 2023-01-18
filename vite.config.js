@@ -12,11 +12,4 @@ export default defineConfig({
       "/images": "src/assets/images",
     },
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/assets/styles/variable.scss";`,
-      },
-    },
-  },
 });

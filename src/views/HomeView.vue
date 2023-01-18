@@ -1,9 +1,11 @@
-<script setup>
-import TheWelcome from "../components/TheWelcome.vue";
-</script>
+<script setup></script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <main>Hello</main>
 </template>
+
+<style lang="scss" scoped>
+main {
+  color: var(--main-clr);
+}
+</style>
