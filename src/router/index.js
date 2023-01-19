@@ -13,6 +13,16 @@ const router = createRouter({
           name: "Bookkeep",
           component: () => import("@/pages/BookKeep.vue"),
         },
+        {
+          path: "/ramenmap",
+          name: "RamenMap",
+          component: () => import("@/pages/RamenMap.vue"),
+        },
+        {
+          path: "/fitness",
+          name: "Fitness",
+          component: () => import("@/pages/FitnessCal.vue"),
+        },
       ],
     },
   ],

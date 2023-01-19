@@ -1,4 +1,5 @@
 @import "./variable.scss";
+@import "./icon.scss";
 
 * {
   padding: 0;
@@ -34,4 +35,8 @@ ul {
 .center {
   display: grid;
   place-items: center;
+}
+
+.transition {
+  transition: 0.25s;
 }

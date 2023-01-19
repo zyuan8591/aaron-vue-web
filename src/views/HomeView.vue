@@ -13,8 +13,9 @@ import WebHeader from "@/components/WebHeader.vue";
 
 <style lang="scss" scoped>
 main {
-  width: var(--container-width);
+  max-width: var(--container-width);
   margin: 0 auto;
   padding: 40px 32px 0;
+  height: 300vh;
 }
 </style>
