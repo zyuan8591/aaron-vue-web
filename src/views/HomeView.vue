@@ -1,21 +1,34 @@
 <script setup>
 import WebHeader from "@/components/WebHeader.vue";
+import WebSideBar from "@/components/WebSideBar.vue";
 </script>
 
 <template>
   <WebHeader />
-  <main>
-    <div>Hello</div>
-    <div>你好</div>
-    <router-view />
-  </main>
+  <div class="main-container flex">
+    <WebSideBar />
+    <main>
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-main {
+.main-container {
   max-width: var(--container-width);
+  max-height: calc(100vh - var(--header-height));
   margin: 0 auto;
   padding: 40px 32px 0;
-  height: 300vh;
+
+  main {
+    flex: 1 1 auto;
+    padding-left: calc(var(--nav-width) + 32px);
+  }
+
+  main,
+  .side-container {
+    height: calc(100vh - var(--header-height) - 40px);
+    overflow: scroll;
+  }
 }
 </style>

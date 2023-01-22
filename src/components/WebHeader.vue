@@ -5,7 +5,7 @@
       <div class="header-right flex-vertical-center">
         <nav>
           <ul class="flex">
-            <li v-for="page in state.pages" :key="page" class="transition">
+            <li v-for="page in pages" :key="page" class="transition">
               <router-link :to="page.route">
                 {{ page.name }}
               </router-link>
@@ -23,15 +23,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-
-const state = reactive({
-  pages: [
-    { name: "BOOKKEEP", route: "/bookkeep" },
-    { name: "RAMEN MAP", route: "/ramenmap" },
-    { name: "FITNESS", route: "/fitness" },
-  ],
-});
+import { pages } from "@/assets/javascript/setting/nav.js";
 </script>
 
 <style lang="scss" scoped>
