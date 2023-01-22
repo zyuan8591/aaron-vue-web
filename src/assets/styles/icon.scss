@@ -1,27 +1,27 @@
 .github-icon {
   background-image: url("../images/github.svg");
   background-size: 20px 20px;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .bookkeep-icon {
   background-image: url("../images/bookkeeping.png");
   background-size: 12px 12px;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .ramen-icon {
   background-image: url("../images/ramen.png");
   background-size: 12px 12px;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .fitness-icon {
   background-image: url("../images/schedule.png");
   background-size: 12px 12px;
+}
+
+.github-icon,
+.bookkeep-icon,
+.ramen-icon,
+.fitness-icon {
   background-repeat: no-repeat;
   background-position: center;
 }
