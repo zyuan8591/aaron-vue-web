@@ -24,7 +24,7 @@ const transitionStyle = computed(() => {
 </script>
 <template>
   <button
-    class="transition"
+    class="transition flex-vertical-center"
     :style="transitionStyle"
     :class="{ 'transition-btn': props.isTransition }"
   >
