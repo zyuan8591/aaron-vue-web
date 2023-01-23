@@ -14,6 +14,16 @@ const router = createRouter({
           component: () => import("@/pages/BookKeep.vue"),
         },
         {
+          path: "/bookkeep/cash",
+          name: "BookkeepCash",
+          component: () => import("@/pages/BookKeepCash.vue"),
+        },
+        {
+          path: "/bookkeep/daily",
+          name: "BookkeepDaily",
+          component: () => import("@/pages/BookKeepDaily.vue"),
+        },
+        {
           path: "/ramenmap",
           name: "RamenMap",
           component: () => import("@/pages/RamenMap.vue"),

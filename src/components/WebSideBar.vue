@@ -22,14 +22,21 @@ watch(
       <input type="text" placeholder="Quick Search..." />
     </div>
     <ul class="nav-list">
-      <li
-        v-for="page in pages"
-        :key="page.name"
-        class="flex transition"
-        :class="{ active: pageNow === page.route }"
-      >
-        <div class="icon" :class="page.icon" />
-        <router-link :to="page.route">{{ page.name }}</router-link>
+      <li v-for="page in pages" :key="page.name" class="transition">
+        <div class="main-page flex" :class="{ active: pageNow === page.route }">
+          <div class="icon" :class="page.icon" />
+          <router-link :to="page.route">{{ page.name }}</router-link>
+        </div>
+        <ul class="sub-page">
+          <li
+            v-for="child in page.child"
+            :key="child.name"
+            class="transition"
+            :class="{ active: pageNow === child.route }"
+          >
+            <router-link :to="child.route">{{ child.name }}</router-link>
+          </li>
+        </ul>
       </li>
     </ul>
   </aside>
@@ -71,21 +78,41 @@ watch(
   }
 
   .nav-list {
-    li {
+    font-size: 14px;
+    > li {
       margin-bottom: 1rem;
-      font-size: 14px;
-      align-items: center;
+      .main-page {
+        align-items: center;
+        margin-bottom: 12px;
 
-      &.active {
-        color: var(--main-clr);
+        .icon {
+          width: 20px;
+          height: 20px;
+          border: 1px solid var(--light-grey-clr);
+          border-radius: 3px;
+          margin-right: 1rem;
+          text-transform: capitalize;
+        }
+
+        &.active {
+          color: var(--main-clr);
+        }
       }
-      .icon {
-        width: 20px;
-        height: 20px;
-        border: 1px solid var(--light-grey-clr);
-        border-radius: 3px;
-        margin-right: 1rem;
-        text-transform: capitalize;
+
+      .sub-page {
+        padding-left: 1rem;
+        border-left: 1px solid var(--light-grey-clr);
+        margin-left: 1px;
+        li {
+          margin-bottom: 8px;
+          margin-left: calc(-1rem - 1px);
+          padding-left: calc(1rem + 1px);
+          border-left: 1px solid transparent;
+          &.active {
+            border-color: var(--main-clr);
+            color: var(--main-clr);
+          }
+        }
       }
     }
   }
