@@ -10,16 +10,19 @@ const state = reactive({
     { name: "Revenue", value: "revenue" },
   ],
   expenseType: [
-    { name: "Lauch", icon: "lauch" },
+    { name: "Luuch", icon: "lunch" },
     { name: "Dinner", icon: "dinner" },
     { name: "YT premium", icon: "youtube" },
-    { name: "MRT", icon: "metro" },
-    { name: "Train", icon: "train" },
+    { name: "Traffic", icon: "train" },
     { name: "Drink", icon: "drink" },
     { name: "Game", icon: "game" },
     { name: "New", icon: "plus" },
   ],
-  revenueType: [{ name: "New", icon: "plus" }],
+  revenueType: [
+    { name: "Salary", icon: "salary" },
+    { name: "Other", icon: "money" },
+    { name: "New", icon: "plus" },
+  ],
 });
 
 const showTypList = computed(() => {
@@ -59,8 +62,8 @@ const showTypList = computed(() => {
 }
 
 .icon {
-  height: 10px;
-  width: 10px;
+  height: 20px;
+  width: 20px;
   margin-right: 6px;
 }
 </style>
