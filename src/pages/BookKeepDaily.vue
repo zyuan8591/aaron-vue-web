@@ -1,10 +1,12 @@
 <script setup>
 import CustomButton from "@/components/CustomButton.vue";
 import TagMenu from "@/components/TagMenu.vue";
-import { reactive, computed, watch, nextTick } from "vue";
+import { reactive, computed, watch } from "vue";
+import { numberWithCommas } from "@/assets/javascript/common";
 
 const state = reactive({
   tagNow: "expense",
+  bg: "red",
   menuList: [
     { name: "Expense", value: "expense" },
     { name: "Revenue", value: "revenue" },
@@ -20,7 +22,7 @@ const state = reactive({
   ],
   revenueType: [
     { name: "Salary", icon: "salary" },
-    { name: "Other", icon: "money" },
+    { name: "Other" },
     { name: "New", icon: "plus" },
   ],
   newRecord: {
@@ -29,6 +31,22 @@ const state = reactive({
     note: "",
     isShow: false,
   },
+  dailyList: [
+    {
+      date: "2023-01-01",
+      typ: "expense",
+      subTyp: "Lunch",
+      amount: 60,
+      note: "水餃",
+    },
+    {
+      date: "2023-01-01",
+      typ: "revenue",
+      subTyp: "Salary",
+      amount: 40000,
+      note: "薪資",
+    },
+  ],
 });
 
 const showTypList = computed(() => {
@@ -81,7 +99,6 @@ const isTypBtnActive = (name) => {
     class="newRecord transition flex"
     :class="{ active: state.newRecord.isShow }"
   >
-    <!-- {{ state.newRecord.typ }} -->
     <input
       type="number"
       class="amount"
@@ -107,6 +124,18 @@ const isTypBtnActive = (name) => {
       @click="state.newRecord.isShow = false"
     />
   </div>
+  <ul class="daily-list">
+    <li
+      v-for="(item, idx) in state.dailyList"
+      :key="idx"
+      class="list-item"
+      :class="item.typ"
+    >
+      <span class="subTyp">{{ item.subTyp }}</span>
+      <span class="amount">{{ numberWithCommas(item.amount) }}</span>
+      <div class="edit-icon" />
+    </li>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
@@ -147,5 +176,44 @@ const isTypBtnActive = (name) => {
   height: 20px;
   width: 20px;
   margin-right: 6px;
+}
+
+.daily-list {
+  display: flex;
+  flex-direction: column;
+  .list-item {
+    border: 1px solid transparent;
+    margin-bottom: 1rem;
+    padding: 8px 12px;
+    border-radius: 3px;
+    display: grid;
+    grid-template-columns: 100px 1fr 20px;
+    gap: 1rem;
+    &.expense {
+      border-color: var(--main-clr);
+      span {
+        color: var(--main-clr);
+      }
+    }
+    &.revenue {
+      border-color: var(--main-green);
+      span {
+        color: var(--main-green);
+      }
+    }
+
+    .amount {
+      text-align: end;
+      &::before {
+        content: "$ ";
+      }
+    }
+
+    .edit-icon {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
 }
 </style>

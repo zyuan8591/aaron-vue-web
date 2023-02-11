@@ -63,6 +63,11 @@
   background-size: 20px 20px;
 }
 
+.edit-icon {
+  background-image: url("../images/edit.png");
+  background-size: 20px 20px;
+}
+
 .github-icon,
 .bookkeep-icon,
 .ramen-icon,
@@ -75,7 +80,8 @@
 .drink-icon,
 .game-icon,
 .salary-icon,
-.money-icon {
+.money-icon,
+.edit-icon {
   background-repeat: no-repeat;
   background-position: center;
 }
