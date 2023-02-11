@@ -108,6 +108,10 @@ watch(
           margin-left: calc(-1rem - 1px);
           padding-left: calc(1rem + 1px);
           border-left: 1px solid transparent;
+
+          &:hover {
+            border-color: var(--darken-border-clr-second);
+          }
           &.active {
             border-color: var(--main-clr);
             color: var(--main-clr);

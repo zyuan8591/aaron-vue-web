@@ -18,10 +18,70 @@
   background-size: 12px 12px;
 }
 
+.plus-icon {
+  background-image: url("../images/plus.png");
+  background-size: 10px 10px;
+}
+
+.lunch-icon {
+  background-image: url("../images/lunch.png");
+  background-size: 20px 20px;
+}
+
+.dinner-icon {
+  background-image: url("../images/dinner.png");
+  background-size: 20px 20px;
+}
+
+.youtube-icon {
+  background-image: url("../images/youtube.png");
+  background-size: 20px 20px;
+}
+
+.train-icon {
+  background-image: url("../images/train.png");
+  background-size: 20px 20px;
+}
+
+.drink-icon {
+  background-image: url("../images/drink.png");
+  background-size: 20px 20px;
+}
+
+.game-icon {
+  background-image: url("../images/game.png");
+  background-size: 20px 20px;
+}
+
+.salary-icon {
+  background-image: url("../images/salary.png");
+  background-size: 20px 20px;
+}
+
+.money-icon {
+  background-image: url("../images/money.png");
+  background-size: 20px 20px;
+}
+
+.edit-icon {
+  background-image: url("../images/edit.png");
+  background-size: 20px 20px;
+}
+
 .github-icon,
 .bookkeep-icon,
 .ramen-icon,
-.fitness-icon {
+.fitness-icon,
+.plus-icon,
+.lunch-icon,
+.dinner-icon,
+.youtube-icon,
+.train-icon,
+.drink-icon,
+.game-icon,
+.salary-icon,
+.money-icon,
+.edit-icon {
   background-repeat: no-repeat;
   background-position: center;
 }

@@ -47,3 +47,11 @@ ul {
   margin-bottom: 16px;
   font-weight: 700;
 }
+
+input {
+  border: 1px solid var(--border-clr);
+  padding: 8px 12px;
+  &:focus {
+    outline: none;
+  }
+}

@@ -4,8 +4,8 @@ const pages = [
     route: "/bookkeep",
     icon: "bookkeep-icon",
     child: [
-      { name: "Cash on Hand", route: "/bookkeep/cash" },
       { name: "Daily Consumption", route: "/bookkeep/daily" },
+      { name: "Cash on Hand", route: "/bookkeep/cash" },
     ],
   },
   { name: "RAMEN MAP", route: "/ramenmap", icon: "ramen-icon" },
