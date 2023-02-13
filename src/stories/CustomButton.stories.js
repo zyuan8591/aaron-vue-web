@@ -9,6 +9,7 @@ export default {
   component: CustomButton,
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
+    // word: {},
     transitionClr: { control: "color" },
     onClick: {},
   },
@@ -29,6 +30,14 @@ const Template = (args) => ({
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Primary.args = {
+  isTransition: false,
+  word: "Button",
+};
+
+export const TransitionRed = Template.bind({});
+// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+TransitionRed.args = {
   isTransition: true,
+  transitionClr: "#e60012",
   word: "Button",
 };
