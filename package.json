@@ -12,9 +12,11 @@
     "book": "build-storybook && start-storybook -p 6006"
   },
   "dependencies": {
-    "@vueuse/core": "^9.10.0",
+    "@vueuse/core": "^9.12.0",
+    "chart.js": "^4.2.1",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
