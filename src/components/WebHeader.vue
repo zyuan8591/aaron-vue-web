@@ -33,6 +33,7 @@ import { pages } from "@/assets/javascript/setting/nav.js";
   width: 100vw;
   border-bottom: 1px solid var(--border-clr);
   background: var(--header-bg);
+  backdrop-filter: blur(5px);
 
   .header {
     max-width: var(--container-width);

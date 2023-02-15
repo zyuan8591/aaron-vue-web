@@ -25,7 +25,6 @@ import WebSideBar from "@/components/WebSideBar.vue";
     padding-left: calc(var(--nav-width) + 32px);
   }
 
-  main,
   .side-container {
     height: calc(100vh - var(--header-height) - 40px);
     overflow: scroll;
