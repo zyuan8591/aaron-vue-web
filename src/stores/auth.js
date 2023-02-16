@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("auth", () => {
     name: "",
     photo: "",
     googleToken: "",
+    uid: "",
   });
 
   const login = () => {
@@ -22,6 +23,7 @@ export const useAuthStore = defineStore("auth", () => {
         userInfo.isLogin = true;
         userInfo.name = user.displayName;
         userInfo.photo = user.photoURL;
+        userInfo.uid = user.uid;
         console.log(user);
       })
       .catch((error) => {
@@ -44,6 +46,7 @@ export const useAuthStore = defineStore("auth", () => {
     userInfo.isLogin = false;
     userInfo.name = "";
     userInfo.photo = "";
+    userInfo.uid = "";
     signOut(auth);
   };
 
