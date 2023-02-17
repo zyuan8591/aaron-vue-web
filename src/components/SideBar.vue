@@ -2,9 +2,15 @@
 import { pages } from "@/assets/javascript/setting/nav.js";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import HashIcon from "@/assets/svg/HashIcon.vue";
 
 const route = useRoute();
 const pageNow = ref(route.path);
+const hoverPage = ref("");
+
+const checkPageActive = (route) => {
+  return pageNow.value.startsWith(route) || hoverPage.value.startsWith(route);
+};
 
 watch(
   () => route.path,
@@ -22,11 +28,16 @@ watch(
         <router-link
           :to="page.route"
           class="main-page flex"
-          :class="{
-            active: pageNow === page.route || pageNow.startsWith(page.route),
-          }"
+          :class="{ active: checkPageActive(page.route) }"
+          @mouseover="hoverPage = page.route"
+          @mouseleave="hoverPage = ''"
         >
           <!-- <div class="icon" :class="page.icon" /> -->
+          <HashIcon
+            class="icon"
+            :isActive="checkPageActive(page.route)"
+            activeClr="#ef233c"
+          />
           {{ page.name }}
         </router-link>
         <ul class="sub-page">
@@ -36,7 +47,9 @@ watch(
             class="transition"
             :class="{ active: pageNow === child.route }"
           >
-            <router-link :to="child.route">{{ child.name }}</router-link>
+            <router-link :to="child.route" class="flex">
+              {{ child.name }}
+            </router-link>
           </li>
         </ul>
       </li>
@@ -53,18 +66,16 @@ watch(
   position: fixed;
 
   .nav-list {
-    font-size: 14px;
+    font-size: 16px;
     > li {
       .main-page {
         align-items: center;
         margin-bottom: 8px;
         border-radius: 4px;
         padding: 8px 14px;
-        transition: 0.15s;
 
-        a {
-          width: 100%;
-          height: 100%;
+        .icon {
+          margin-right: 10px;
         }
 
         &.active,
