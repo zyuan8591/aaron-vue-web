@@ -14,9 +14,9 @@ const router = createRouter({
           component: () => import("@/pages/BookKeep.vue"),
         },
         {
-          path: "/bookkeep/cash",
-          name: "BookkeepCash",
-          component: () => import("@/pages/BookKeepCash.vue"),
+          path: "/bookkeep/assets",
+          name: "BookkeepAssets",
+          component: () => import("@/pages/BookKeepAssets.vue"),
         },
         {
           path: "/bookkeep/daily",

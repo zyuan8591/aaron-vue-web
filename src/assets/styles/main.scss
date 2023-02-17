@@ -55,7 +55,15 @@ ul {
 input {
   border: 1px solid var(--border-clr);
   padding: 8px 12px;
+  background: none;
   &:focus {
     outline: none;
   }
+}
+
+.normal-container {
+  margin: 10px 0;
+  padding: 15px;
+  border: 1px solid #3d3e42;
+  background: #181a25;
 }

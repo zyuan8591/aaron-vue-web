@@ -18,12 +18,12 @@ const state = reactive({
     { name: "Traffic", icon: "train" },
     { name: "Drink", icon: "drink" },
     { name: "Game", icon: "game" },
-    { name: "New", icon: "plus" },
+    // { name: "New", icon: "plus" },
   ],
   revenueType: [
     { name: "Salary", icon: "salary" },
     { name: "Other" },
-    { name: "New", icon: "plus" },
+    // { name: "New", icon: "plus" },
   ],
   newRecord: {
     typ: "",
@@ -128,12 +128,13 @@ const isTypBtnActive = (name) => {
     <li
       v-for="(item, idx) in state.dailyList"
       :key="idx"
-      class="list-item"
+      class="list-item normal-container"
       :class="item.typ"
     >
       <span class="subTyp">{{ item.subTyp }}</span>
       <span class="amount">{{ numberWithCommas(item.amount) }}</span>
-      <div class="edit-icon" />
+      <!-- <div class="edit-icon" /> -->
+      <CustomButton word="EDIT" size="tag" />
     </li>
   </ul>
 </template>
@@ -158,9 +159,9 @@ const isTypBtnActive = (name) => {
 .newRecord {
   height: 0;
   overflow: hidden;
-  margin-bottom: 1rem;
   &.active {
     height: 41px;
+    margin-bottom: 1rem;
   }
 
   input {
@@ -183,12 +184,19 @@ const isTypBtnActive = (name) => {
   flex-direction: column;
   .list-item {
     border: 1px solid transparent;
-    margin-bottom: 1rem;
     padding: 8px 12px;
     border-radius: 3px;
     display: grid;
-    grid-template-columns: 100px 1fr 20px;
+    align-items: center;
+    grid-template-columns: 100px 1fr min-content;
     gap: 1rem;
+
+    :deep(.tag) {
+      place-items: center;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
     &.expense {
       border-color: var(--main-clr);
       span {

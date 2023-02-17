@@ -13,6 +13,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  size: {
+    type: String,
+    default: "",
+  },
 });
 
 const transitionStyle = computed(() => {
@@ -26,7 +30,10 @@ const transitionStyle = computed(() => {
   <button
     class="transition flex-vertical-center"
     :style="transitionStyle"
-    :class="{ 'transition-btn': props.isTransition }"
+    :class="{
+      'transition-btn': props.isTransition,
+      tag: props.size === 'tag',
+    }"
   >
     <slot name="icon" />
     {{ props.word }}
@@ -42,6 +49,10 @@ button {
   background: none;
   padding: 8px 12px;
   cursor: pointer;
+
+  &.tag {
+    padding: 8px 10px;
+  }
 
   &.transition-btn {
     border: 2px solid var(--button-clr);
