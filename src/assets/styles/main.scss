@@ -67,3 +67,8 @@ input {
   border: 1px solid #3d3e42;
   background: #181a25;
 }
+
+.not-scroll {
+  height: 100%;
+  overflow-y: hidden;
+}
