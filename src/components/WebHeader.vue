@@ -32,7 +32,6 @@ import { pages } from "@/assets/javascript/setting/nav.js";
   top: 0;
   width: 100vw;
   border-bottom: 1px solid var(--border-clr);
-  background: var(--header-bg);
   backdrop-filter: blur(5px);
 
   .header {
@@ -44,6 +43,7 @@ import { pages } from "@/assets/javascript/setting/nav.js";
     .title {
       font-size: 25px;
       color: var(--main-clr);
+      font-family: "Press Start 2P", cursive;
     }
 
     .header-right {

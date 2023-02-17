@@ -9,6 +9,10 @@
   font-family: "Monda", "Noto Sans TC", sans-serif;
 }
 
+body {
+  background: var(--main-bg);
+}
+
 a {
   text-decoration: none;
   color: inherit;

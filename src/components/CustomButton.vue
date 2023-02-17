@@ -50,7 +50,7 @@ button {
     border-radius: 3px;
     padding: 8px 20px;
     &:hover {
-      background: #fff;
+      background: var(--main-bg);
       color: var(--button-clr);
     }
   }

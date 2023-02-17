@@ -1,12 +1,12 @@
 <script setup>
 import WebHeader from "@/components/WebHeader.vue";
-import WebSideBar from "@/components/WebSideBar.vue";
+import SideBar from "@/components/SideBar.vue";
 </script>
 
 <template>
   <WebHeader />
   <div class="main-container flex">
-    <WebSideBar />
+    <SideBar />
     <main>
       <router-view />
     </main>
