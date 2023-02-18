@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, useSlots, reactive } from "vue";
+import CustomButton from "@/components/CustomButton.vue";
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -10,11 +11,14 @@ const props = defineProps({
     default: "",
   },
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "confirm"]);
 const body = document.querySelector("body");
+
+const state = reactive({ slots: {} });
 
 onMounted(() => {
   body.classList.add("not-scroll");
+  state.slots = useSlots();
 });
 onUnmounted(() => {
   body.classList.remove("not-scroll");
@@ -24,6 +28,19 @@ onUnmounted(() => {
   <div class="modal-container" @click.self="emit('update:modelValue', false)">
     <div class="modal normal-container">
       <h2 v-if="props.title" class="page-title">{{ props.title }}</h2>
+      <div v-if="state.slots.modalBody" class="modal-body">
+        <slot name="modalBody" />
+      </div>
+      <div class="modal-footer">
+        <slot name="modalFooter" />
+        <div v-if="!state.slots.modalFooter" class="btn-group">
+          <CustomButton
+            word="Cancel"
+            @click="emit('update:modelValue', false)"
+          />
+          <CustomButton word="Confirm" @click="emit('confirm')" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +59,18 @@ onUnmounted(() => {
   .modal {
     margin: 0 32px;
     flex-grow: 1;
-    max-width: 500px;
+    min-width: 280px;
+    max-width: 400px;
+
+    .modal-footer {
+      margin-top: 1rem;
+
+      .btn-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
   }
 }
 </style>
