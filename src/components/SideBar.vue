@@ -16,7 +16,6 @@ watch(
   () => route.path,
   () => {
     pageNow.value = route.path;
-    console.log(pageNow.value);
   }
 );
 </script>
