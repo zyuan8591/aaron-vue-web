@@ -12,7 +12,6 @@ export const useAuthStore = defineStore("auth", () => {
   });
 
   auth.onAuthStateChanged(function (user) {
-    console.log(user);
     if (user) {
       userInfo.isLogin = true;
       userInfo.name = user.displayName;

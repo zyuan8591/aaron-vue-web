@@ -4,13 +4,15 @@ import { ref as dbRef, set, onValue } from "firebase/database";
 
 export function useFirebase(method, route, payload) {
   if (method === "get") {
-    const data = ref([]);
+    const dbData = ref([]);
     onValue(dbRef(db, route), (snapshot) => {
-      data.value = snapshot.val();
+      dbData.value = snapshot.val() || [];
     });
 
-    return { data };
+    return { dbData };
   } else if (method === "post") {
+    console.log(route);
+    console.log(payload);
     set(dbRef(db, route), payload);
   }
 }

@@ -4,11 +4,12 @@ import { numberWithCommas } from "@/assets/javascript/common";
 import { ref, reactive, computed, watch, onMounted } from "vue";
 import XSvg from "@/assets/svg/XSvg.vue";
 import { useFirebase } from "@/composables/useFirebase.js";
+import { useAuthStore } from "@/stores/auth.js";
 
-const isShowModal = ref(false);
-const modalState = ref("");
-const delItem = ref(0);
-const { data } = useFirebase("get", "users/test/bankList");
+const authStore = useAuthStore();
+const userInfo = reactive(authStore.userInfo);
+const data = ref([]);
+
 const assets = reactive({
   data: [],
   newAsset: { name: "", amount: 0 },
@@ -25,12 +26,23 @@ watch(
   }
 );
 
+watch(
+  () => userInfo.uid,
+  () => {
+    const { dbData } = useFirebase("get", `users/${userInfo.uid}/bankList`);
+    data.value = dbData;
+  }
+);
+
 const assetsTotal = computed(() => {
-  const total = assets.data.reduce((total, val) => total + val.amount, 0);
+  const total = assets.data?.reduce((total, val) => total + val.amount, 0) || 0;
   return numberWithCommas(total);
 });
 
 // Modal: ADD / DEL Assets Handler
+const isShowModal = ref(false);
+const modalState = ref("");
+const delItem = ref(0);
 const showModal = (state, id = 0) => {
   isShowModal.value = true;
   delItem.value = id;
@@ -39,7 +51,7 @@ const showModal = (state, id = 0) => {
 const confirmHandler = () => {
   let newData = [];
   if (modalState.value === "add") {
-    const id = assets.data.at(-1).id + 1;
+    const id = assets.data.length ? assets.data.at(-1)?.id + 1 : 1;
     const name = assets.newAsset.name;
     const amount = assets.newAsset.amount;
     newData = [...assets.data, { id, name, amount }];
@@ -47,11 +59,12 @@ const confirmHandler = () => {
   } else if (modalState.value === "del") {
     newData = [...assets.data].filter((d) => d.id !== delItem.value);
   }
-  useFirebase("post", "users/test/bankList", newData);
+  useFirebase("post", `users/${userInfo.uid}/bankList`, newData);
   isShowModal.value = false;
 };
 </script>
 <template>
+  {{ assets.data }}
   <h1 class="page-title flex-vertical-center">
     Assets <XSvg class="add-svg" @click="showModal('add')" />
   </h1>
