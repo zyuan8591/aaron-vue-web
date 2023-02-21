@@ -8,23 +8,27 @@ export const useAuthStore = defineStore("auth", () => {
     isLogin: false,
     name: "",
     photo: "",
-    googleToken: "",
     uid: "",
+  });
+
+  auth.onAuthStateChanged(function (user) {
+    console.log(user);
+    if (user) {
+      userInfo.isLogin = true;
+      userInfo.name = user.displayName;
+      userInfo.photo = user.photoURL;
+      userInfo.uid = user.uid;
+    }
   });
 
   const login = () => {
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        userInfo.googleToken = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
         // The signed-in user info.
-        const user = result.user;
-        userInfo.isLogin = true;
-        userInfo.name = user.displayName;
-        userInfo.photo = user.photoURL;
-        userInfo.uid = user.uid;
-        console.log(user);
+        // const user = result.user;
+        console.log(result);
       })
       .catch((error) => {
         // Handle Errors here.

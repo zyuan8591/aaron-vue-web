@@ -9,7 +9,7 @@ import { useAuthStore } from "@/stores/auth.js";
 
 const authStore = useAuthStore();
 const userInfo = reactive(authStore.userInfo);
-const { login } = authStore;
+const { login, logout } = authStore;
 watchEffect(
   () => userInfo,
   () => console.log(userInfo)
@@ -35,7 +35,8 @@ onValue(starCountRef, (snapshot) => {
   <h1>hello</h1>
   <div>{{ userInfo }}</div>
   <button @click="postTestClicker">postTest</button>
-  <button @click="login">Login</button>
+  <button v-if="!userInfo.isLogin" @click="login">Login</button>
+  <button v-else @click="logout">Logout</button>
 </template>
 <style scoped lang="scss">
 button {
