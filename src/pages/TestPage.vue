@@ -6,6 +6,7 @@ import { reactive, watchEffect } from "vue";
 // Pinia
 import { useAuthStore } from "@/stores/auth.js";
 // import { storeToRefs } from "pinia";
+import CustomDropdown from "@/components/CustomDropdown.vue";
 
 const authStore = useAuthStore();
 const userInfo = reactive(authStore.userInfo);
@@ -14,6 +15,14 @@ watchEffect(
   () => userInfo,
   () => console.log(userInfo)
 );
+
+const state = reactive({
+  dropdownOption: [
+    { key: "股票", value: "stock" },
+    { key: "現金", value: "cash" },
+  ],
+  dropdownValue: "stock",
+});
 
 const postTestClicker = async () => {
   const data = { name: "kevin", age: 26, birthday: "1997-11-29" };
@@ -32,13 +41,26 @@ onValue(starCountRef, (snapshot) => {
 });
 </script>
 <template>
-  <h1>hello</h1>
-  <div>{{ userInfo }}</div>
-  <button @click="postTestClicker">postTest</button>
-  <button v-if="!userInfo.isLogin" @click="login">Login</button>
-  <button v-else @click="logout">Logout</button>
+  <div class="wrapper">
+    <h1>hello</h1>
+    <CustomDropdown
+      :options="state.dropdownOption"
+      v-model="state.dropdownValue"
+      :width="200"
+    />
+    <div class="info">{{ userInfo }}</div>
+    <button @click="postTestClicker">postTest</button>
+    <button v-if="!userInfo.isLogin" @click="login">Login</button>
+    <button v-else @click="logout">Logout</button>
+  </div>
 </template>
 <style scoped lang="scss">
+.wrapper {
+  padding-bottom: 1rem;
+}
+.info {
+  word-break: break-all;
+}
 button {
   display: block;
   margin: 10px 0;
