@@ -1,3 +1,20 @@
+<script setup>
+import { pages } from "@/assets/javascript/setting/nav.js";
+import { reactive, computed } from "vue";
+import { useAuthStore } from "@/stores/auth.js";
+import CustomButton from "@/components/CustomButton.vue";
+
+const authStore = useAuthStore();
+const userInfo = reactive(authStore.userInfo);
+const { login, logout } = authStore;
+
+const logBtnWord = computed(() => (userInfo.isLogin ? "LOG OUT" : "LOG IN"));
+const logHandler = () => {
+  if (userInfo.isLogin) return logout();
+  login();
+};
+</script>
+
 <template>
   <div class="header-wrapper">
     <div class="header flex-vertical-center">
@@ -12,19 +29,16 @@
             </li>
           </ul>
         </nav>
-        <a
-          href="https://github.com/zyuan8591/aaron-vue-web"
-          class="github-icon transition"
-          target="_blank"
+        <CustomButton
+          class="log-btn"
+          :word="logBtnWord"
+          size="tag"
+          @click="logHandler"
         />
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import { pages } from "@/assets/javascript/setting/nav.js";
-</script>
 
 <style lang="scss" scoped>
 .header-wrapper {
@@ -72,5 +86,10 @@ import { pages } from "@/assets/javascript/setting/nav.js";
       }
     }
   }
+}
+
+:deep(.log-btn.tag) {
+  margin-left: 26px;
+  padding: 2px 10px;
 }
 </style>

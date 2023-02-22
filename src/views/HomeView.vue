@@ -1,13 +1,21 @@
 <script setup>
 import WebHeader from "@/components/WebHeader.vue";
 import SideBar from "@/components/SideBar.vue";
+import { ref, reactive, watch } from "vue";
+import { useAuthStore } from "@/stores/auth.js";
+
+const authStore = useAuthStore();
+const userInfo = reactive(authStore.userInfo);
+const key = ref(0);
+// reload component after login
+watch(userInfo, () => key.value++);
 </script>
 
 <template>
   <WebHeader />
   <div class="main-container flex">
     <SideBar />
-    <main>
+    <main :key="key">
       <router-view />
     </main>
   </div>

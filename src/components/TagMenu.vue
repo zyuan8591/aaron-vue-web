@@ -28,6 +28,7 @@ const clickTagHandler = (val) => {
       :key="tag.name"
       :class="{ active: tag.value === props.modelValue }"
       @click="clickTagHandler(tag.value)"
+      role="button"
     >
       {{ tag.name }}
     </li>

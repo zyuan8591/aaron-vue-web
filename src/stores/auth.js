@@ -19,7 +19,6 @@ export const useAuthStore = defineStore("auth", () => {
       userInfo.photo = user.photoURL;
       userInfo.uid = user.uid;
       userInfo.token = user.accessToken;
-      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
     } else {
       userInfo.isLogin = false;
       userInfo.name = "";
@@ -27,6 +26,7 @@ export const useAuthStore = defineStore("auth", () => {
       userInfo.uid = "";
       userInfo.token = "";
     }
+    window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
   });
 
   const login = () => {
