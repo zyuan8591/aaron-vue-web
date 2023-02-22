@@ -17,7 +17,11 @@ const body = document.querySelector("body");
 
 const state = reactive({ slots: {} });
 
-useEventListener(window, "keydown", () => emit("update:modelValue", false));
+useEventListener(window, "keydown", (e) => {
+  if (e.key === "Escape") {
+    emit("update:modelValue", false);
+  }
+});
 
 onMounted(() => {
   body.classList.add("not-scroll");
