@@ -8,31 +8,18 @@ import { useAuthStore } from "@/stores/auth.js";
 
 const authStore = useAuthStore();
 const userInfo = reactive(authStore.userInfo);
-const data = ref([]);
 
 const assets = reactive({
   data: [],
   newAsset: { name: "", amount: 0 },
 });
 
+const uid = JSON.parse(window.localStorage.getItem("userInfo")).uid;
+const { data } = useFirebase("get", `users/${uid}/bankList`);
 onMounted(() => {
   if (data.value) assets.data = data.value;
 });
-
-watch(
-  () => data.value,
-  () => {
-    assets.data = data.value;
-  }
-);
-
-watch(
-  () => userInfo.uid,
-  () => {
-    const { dbData } = useFirebase("get", `users/${userInfo.uid}/bankList`);
-    data.value = dbData;
-  }
-);
+watch(data, () => (assets.data = data.value));
 
 const assetsTotal = computed(() => {
   const total = assets.data?.reduce((total, val) => total + val.amount, 0) || 0;
@@ -64,7 +51,6 @@ const confirmHandler = () => {
 };
 </script>
 <template>
-  {{ assets.data }}
   <h1 class="page-title flex-vertical-center">
     Assets <XSvg class="add-svg" @click="showModal('add')" />
   </h1>

@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("auth", () => {
     name: "",
     photo: "",
     uid: "",
+    token: "",
   });
 
   auth.onAuthStateChanged(function (user) {
@@ -17,6 +18,14 @@ export const useAuthStore = defineStore("auth", () => {
       userInfo.name = user.displayName;
       userInfo.photo = user.photoURL;
       userInfo.uid = user.uid;
+      userInfo.token = user.accessToken;
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    } else {
+      userInfo.isLogin = false;
+      userInfo.name = "";
+      userInfo.photo = "";
+      userInfo.uid = "";
+      userInfo.token = "";
     }
   });
 
