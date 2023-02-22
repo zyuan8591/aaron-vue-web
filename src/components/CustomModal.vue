@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted, useSlots, reactive } from "vue";
 import CustomButton from "@/components/CustomButton.vue";
+import { useEventListener } from "@/composables/useEventListener.js";
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -15,6 +16,8 @@ const emit = defineEmits(["update:modelValue", "confirm"]);
 const body = document.querySelector("body");
 
 const state = reactive({ slots: {} });
+
+useEventListener(window, "keydown", () => emit("update:modelValue", false));
 
 onMounted(() => {
   body.classList.add("not-scroll");
