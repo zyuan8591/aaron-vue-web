@@ -5,15 +5,22 @@ import { ref, reactive, computed, watch, onMounted } from "vue";
 import XSvg from "@/assets/svg/XSvg.vue";
 import { useFirebase } from "@/composables/useFirebase.js";
 import { useAuthStore } from "@/stores/auth.js";
+import CustomDropdown from "@/components/CustomDropdown.vue";
 
 const authStore = useAuthStore();
 const userInfo = reactive(authStore.userInfo);
 
+const assetModel = { name: "", amount: 0, type: "cash", price: 0 };
 const assets = reactive({
   data: [],
-  newAsset: { name: "", amount: 0 },
+  newAsset: { ...assetModel },
+  assetType: [
+    { key: "Deposit / Cash", value: "cash" },
+    { key: "Stock", value: "stock" },
+  ],
 });
 
+// GET user's data list
 const uid = JSON.parse(window.localStorage.getItem("userInfo")).uid;
 const { data } = useFirebase("get", `users/${uid}/bankList`);
 onMounted(() => {
@@ -22,7 +29,12 @@ onMounted(() => {
 watch(data, () => (assets.data = data.value));
 
 const assetsTotal = computed(() => {
-  const total = assets.data?.reduce((total, val) => total + val.amount, 0) || 0;
+  const total =
+    assets.data?.reduce((total, val) => {
+      let amount = val.amount;
+      if (val.type === "stock") amount = val.amount * val.price;
+      return total + amount;
+    }, 0) || 0;
   return numberWithCommas(total);
 });
 
@@ -41,8 +53,10 @@ const confirmHandler = () => {
     const id = assets.data.length ? assets.data.at(-1)?.id + 1 : 1;
     const name = assets.newAsset.name;
     const amount = assets.newAsset.amount;
-    newData = [...assets.data, { id, name, amount }];
-    assets.newAsset = { name: "", amount: 0 };
+    const type = assets.newAsset.type;
+    const price = assets.newAsset.price;
+    newData = [...assets.data, { id, name, amount, type, price }];
+    assets.newAsset = { ...assetModel };
   } else if (modalState.value === "del") {
     newData = [...assets.data].filter((d) => d.id !== delItem.value);
   }
@@ -62,7 +76,10 @@ const confirmHandler = () => {
       class="normal-container flex-vertical-center"
     >
       <span>{{ data.name }}</span>
-      <span>{{ numberWithCommas(data.amount) }}</span>
+      <span v-if="data.type === 'cash'">
+        {{ numberWithCommas(data.amount) }}
+      </span>
+      <span v-else>{{ numberWithCommas(data.amount * data.price) }}</span>
       <XSvg class="del-btn" @click="showModal('del', data.id)" />
     </li>
   </ul>
@@ -79,11 +96,26 @@ const confirmHandler = () => {
         <input type="text" id="newAssetName" v-model="assets.newAsset.name" />
       </div>
       <div class="form-control">
+        <label for="" class="no-wrap">Asset Type</label>
+        <CustomDropdown
+          :options="assets.assetType"
+          v-model="assets.newAsset.type"
+        />
+      </div>
+      <div class="form-control">
         <label for="newAssetAmount">Asset Amount</label>
         <input
           type="number"
           id="newAssetAmount"
           v-model="assets.newAsset.amount"
+        />
+      </div>
+      <div v-if="assets.newAsset.type === 'stock'" class="form-control">
+        <label for="newAssetAmount">Stock Price</label>
+        <input
+          type="number"
+          id="newAssetAmount"
+          v-model="assets.newAsset.price"
           min="0"
         />
       </div>

@@ -1,5 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
+import { onClickOutside } from "@vueuse/core";
+
 const props = defineProps({
   options: {
     type: Array,
@@ -17,6 +19,11 @@ const props = defineProps({
   },
 });
 
+const closeModal = () => (isOpenDropdown.value = false);
+
+const dropdownRef = ref(null);
+onClickOutside(dropdownRef, () => closeModal());
+
 const isOpenDropdown = ref(false);
 const emit = defineEmits(["update:modelValue"]);
 
@@ -30,24 +37,21 @@ const changeHandler = (opt) => {
 };
 </script>
 <template>
-  <div>{{ props.modelValue }}</div>
-  {{ props.options }}
-  {{ currentOption }}
-  <h1>hello</h1>
   <div
     class="dropdown-container"
-    :style="{ width: props.width ? `${props.width}px` : auto }"
+    :style="{ width: props.width ? `${props.width}px` : '100%' }"
+    ref="dropdownRef"
   >
     <input
       type="text"
       @click="isOpenDropdown = !isOpenDropdown"
       readonly
-      :value="currentOption.key"
+      :placeholder="currentOption.key"
     />
-    <div class="arrow-down" />
+    <div class="arrow-down transition" :class="{ active: isOpenDropdown }" />
     <div v-if="isOpenDropdown" class="options-container normal-container">
       <div
-        class="option"
+        class="option transition"
         v-for="opt in options"
         :key="opt.value"
         @click="changeHandler(opt)"
@@ -66,6 +70,9 @@ const changeHandler = (opt) => {
 
   input {
     cursor: pointer;
+    &::placeholder {
+      color: var(--main-content-clr);
+    }
   }
 
   .arrow-down {
@@ -73,6 +80,11 @@ const changeHandler = (opt) => {
     top: 50%;
     transform: translateY(-50%);
     right: 10px;
+    transform-origin: center;
+
+    &.active {
+      transform: translateY(-50%) rotate(-180deg);
+    }
   }
 
   .options-container {
@@ -81,11 +93,19 @@ const changeHandler = (opt) => {
     border: 1px solid --border-clr;
     width: 100%;
     margin-top: 5px;
+    padding: 0;
 
     .option {
+      padding: 0 15px;
       line-height: 40px;
       cursor: pointer;
       user-select: none;
+      font-size: 14px;
+      margin: 5px 0;
+      &:hover {
+        background: var(--hover-red);
+        color: #fff;
+      }
     }
   }
 }
