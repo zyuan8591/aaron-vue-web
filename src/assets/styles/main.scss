@@ -64,8 +64,8 @@ input {
 .normal-container {
   margin: 10px 0;
   padding: 15px;
-  border: 1px solid #3d3e42;
-  background: #181a25;
+  border: 1px solid var(--container-border);
+  background: var(--container-bg);
 }
 
 .not-scroll {

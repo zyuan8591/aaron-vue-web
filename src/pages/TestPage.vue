@@ -3,6 +3,7 @@ import { postTest } from "@/assets/javascript/api.js";
 import { db } from "@/assets/javascript/setting/firebase.js";
 import { ref, onValue } from "firebase/database";
 import { reactive, watchEffect } from "vue";
+import TooltipIcon from "@/assets/svg/TooltipIcon.vue";
 // Pinia
 import { useAuthStore } from "@/stores/auth.js";
 import { useFirebase } from "@/composables/useFirebase.js";
@@ -49,6 +50,7 @@ onValue(starCountRef, (snapshot) => {
 <template>
   <div class="wrapper">
     <h1>hello</h1>
+    <div>Tooltip <TooltipIcon tip="Tooltip!!!" /></div>
     <button @click="setPermission">Set permissions</button>
     <CustomDropdown
       :options="state.dropdownOption"
