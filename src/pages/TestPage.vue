@@ -5,6 +5,8 @@ import { ref, onValue } from "firebase/database";
 import { reactive, watchEffect } from "vue";
 // Pinia
 import { useAuthStore } from "@/stores/auth.js";
+import { useFirebase } from "@/composables/useFirebase.js";
+
 // import { storeToRefs } from "pinia";
 import CustomDropdown from "@/components/CustomDropdown.vue";
 
@@ -15,6 +17,10 @@ watchEffect(
   () => userInfo,
   () => console.log(userInfo)
 );
+
+const setPermission = () => {
+  useFirebase("post", `users/${userInfo.uid}/permission`, "admin");
+};
 
 const state = reactive({
   dropdownOption: [
@@ -43,12 +49,13 @@ onValue(starCountRef, (snapshot) => {
 <template>
   <div class="wrapper">
     <h1>hello</h1>
+    <button @click="setPermission">Set permissions</button>
     <CustomDropdown
       :options="state.dropdownOption"
       v-model="state.dropdownValue"
       :width="200"
     />
-    <div class="info">{{ userInfo }}</div>
+    <div class="info">userInfo: {{ userInfo }}</div>
     <button @click="postTestClicker">postTest</button>
     <button v-if="!userInfo.isLogin" @click="login">Login</button>
     <button v-else @click="logout">Logout</button>

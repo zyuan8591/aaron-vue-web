@@ -2,6 +2,7 @@ import { reactive } from "vue";
 import { defineStore } from "pinia";
 import { auth } from "@/assets/javascript/setting/firebase.js";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { useFirebase } from "@/composables/useFirebase.js";
 
 export const useAuthStore = defineStore("auth", () => {
   const userInfo = reactive({
@@ -9,7 +10,7 @@ export const useAuthStore = defineStore("auth", () => {
     name: "",
     photo: "",
     uid: "",
-    token: "",
+    permission: "",
   });
 
   auth.onAuthStateChanged(function (user) {
@@ -18,13 +19,13 @@ export const useAuthStore = defineStore("auth", () => {
       userInfo.name = user.displayName;
       userInfo.photo = user.photoURL;
       userInfo.uid = user.uid;
-      userInfo.token = user.accessToken;
+      const { data } = useFirebase("get", `users/${user.uid}/permission`);
+      userInfo.permission = data;
     } else {
       userInfo.isLogin = false;
       userInfo.name = "";
       userInfo.photo = "";
       userInfo.uid = "";
-      userInfo.token = "";
     }
     window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
   });

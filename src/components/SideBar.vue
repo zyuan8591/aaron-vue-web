@@ -1,12 +1,24 @@
 <script setup>
 import { pages } from "@/assets/javascript/setting/nav.js";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import HashIcon from "@/assets/svg/HashIcon.vue";
+import { useAuthStore } from "@/stores/auth.js";
 
 const route = useRoute();
 const pageNow = ref(route.path);
 const hoverPage = ref("");
+
+const authStore = useAuthStore();
+
+const pageList = computed(() => {
+  let list = pages;
+  if (authStore.userInfo.permission !== "admin") {
+    const adminPage = ["/test"];
+    list = list.filter((l) => !adminPage.includes(l.route));
+  }
+  return list;
+});
 
 const checkPageActive = (route) => {
   return pageNow.value.startsWith(route) || hoverPage.value.startsWith(route);
@@ -23,7 +35,7 @@ watch(
 <template>
   <aside class="side-container">
     <ul class="nav-list">
-      <li v-for="page in pages" :key="page.name" class="transition">
+      <li v-for="page in pageList" :key="page.name" class="transition">
         <router-link
           :to="page.route"
           class="main-page flex"

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/stores/auth.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,49 +7,32 @@ const router = createRouter({
     {
       path: "/",
       name: "Home",
-      meta: { isLogin: false },
       component: () => import("@/views/HomeView.vue"),
       children: [
         {
-          path: "/bookkeep",
-          name: "Bookkeep",
-          meta: { isLogin: false },
-
-          component: () => import("@/pages/BookKeep.vue"),
-        },
-        {
-          path: "/bookkeep/assets",
-          name: "BookkeepAssets",
-          meta: { isLogin: false },
-
+          path: "/assets",
+          name: "assets",
           component: () => import("@/pages/BookKeepAssets.vue"),
         },
         {
-          path: "/bookkeep/daily",
-          name: "BookkeepDaily",
-          meta: { isLogin: false },
-
+          path: "/daily",
+          name: "daily",
           component: () => import("@/pages/BookKeepDaily.vue"),
         },
         {
           path: "/ramenmap",
-          name: "RamenMap",
-          meta: { isLogin: false },
-
+          name: "ramenmap",
           component: () => import("@/pages/RamenMap.vue"),
         },
         {
           path: "/fitness",
-          name: "Fitness",
-          meta: { isLogin: false },
-
+          name: "fitness",
           component: () => import("@/pages/FitnessCal.vue"),
         },
         {
           path: "/test",
-          name: "Test",
-          meta: { isLogin: false },
-
+          name: "test",
+          meta: { isAdmin: true },
           component: () => import("@/pages/TestPage.vue"),
         },
       ],
@@ -57,9 +41,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log("from", from);
-  console.log("to", to);
-  console.log(to.meta.isLogin);
+  const authStore = useAuthStore();
+  if (to.meta.isAdmin) {
+    console.log(authStore.userInfo.permission);
+    if (authStore.userInfo.permission === "admin") {
+      return next();
+    } else {
+      return next("/");
+    }
+  }
   next();
 });
 

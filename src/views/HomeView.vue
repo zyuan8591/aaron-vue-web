@@ -13,9 +13,9 @@ watch(userInfo, () => key.value++);
 
 <template>
   <WebHeader />
-  <div class="main-container flex">
+  <div class="main-container flex" :key="key">
     <SideBar />
-    <main :key="key">
+    <main>
       <router-view />
     </main>
   </div>
