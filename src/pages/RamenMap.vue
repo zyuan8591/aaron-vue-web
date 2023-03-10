@@ -14,6 +14,7 @@ const states = reactive({
   google: null,
   map: null,
   markers: null,
+  center: { lat: 0, lng: 0 },
 });
 
 const initMap = async () => {
@@ -26,7 +27,7 @@ const initMap = async () => {
   states.google = await loader.load();
   states.map = new states.google.maps.Map(document.getElementById("map"), {
     // center: { lat: 25.0425, lng: 121.5468 },
-    center: { lat: coords.value.latitude, lng: coords.value.longitude },
+    center: { lat: states.center.lat, lng: states.center.lng },
     zoom: 14,
     mapTypeControl: false,
     fullscreenControl: false,
@@ -41,9 +42,9 @@ const initMap = async () => {
 const hasPermission = computed(() => userInfo.permission === "admin");
 
 watch(coords, async () => {
+  states.center = { lat: coords.value.latitude, lng: coords.value.longitude };
   if (isFinite(coords.value.latitude)) {
     isMapLoading.value = false;
-
     await initMap();
   }
 });
@@ -56,11 +57,19 @@ onMounted(async () => {
   <h1 class="page-title">Ramen Map</h1>
   <div v-if="!hasPermission">請向管理員申請權限</div>
   <div v-if="hasPermission && isMapLoading" class="loader" />
+  <template v-else>
+    <input type="text" class="search-input" />
+  </template>
   <div id="map" v-show="hasPermission && !isMapLoading"></div>
 </template>
 <style scoped lang="scss">
+.search-input {
+  margin-bottom: 10px;
+}
+
 #map {
   width: 100%;
   height: 600px;
+  border-radius: 3px;
 }
 </style>
