@@ -35,7 +35,7 @@ watch(userInfo, () => key.value++);
 
   .side-container {
     height: calc(100vh - var(--header-height) - 40px);
-    overflow: scroll;
+    overflow: auto;
   }
 }
 </style>
